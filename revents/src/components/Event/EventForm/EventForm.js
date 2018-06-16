@@ -5,11 +5,14 @@ import cuid from 'cuid';
 import { reduxForm, Field } from 'redux-form';
 import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import moment from 'moment';
+import Script from 'react-load-script';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { createEvent, updateEvent } from '../../../actions/eventActions';
 import TextInput from '../../../common/form/TextInput';
 import TextArea from '../../../common/form/TextArea';
 import SelectInput from '../../../common/form/SelectInput';
 import DateInput from '../../../common/form/DateInput';
+import PlaceInput from '../../../common/form/PlaceInput';
 
 const mapStateToProps = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -49,6 +52,12 @@ const validate = combineValidators({
 })
 
 class EventForm extends React.Component {
+  state = {
+    scriptLoaded: false,
+    cityLatLng: {},
+    venueLatLng: {}
+  }
+  handleScriptLoaded = () => this.setState({scriptLoaded: true});
   handleSubmit = (values) => {
     values.date = moment(values.date).format();
     if (this.props.initialValues.id) {
@@ -71,14 +80,19 @@ class EventForm extends React.Component {
         <Grid.Column width={10}>
           <Segment>
             <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+              <Script
+                url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9xXWDg0V3q9bc0M2Jhsyks6R4qTJlNaA&libraries=places"
+                onLoad={this.handleScriptLoaded}
+              />
               <Header sub color='teal' content='Event Details' />
               <Field name='title' type='text' component={TextInput} placeholder='Event title' />
               <Field name='category' type='select' component={SelectInput} options={category} placeholder='Event category' />
               <Field name='description' type='textarea' component={TextArea} rows={3} placeholder='Event description' />
               <Field name='hostedBy' type='text' component={TextInput} placeholder='Hosted by' />
               <Header sub color='teal' content='Event Location' />
-              <Field name='city' type='text' component={TextInput} placeholder='City' />
-              <Field name='venue' type='text' component={TextInput} placeholder='Venue' />
+              <Field name='city' type='text' component={PlaceInput} options={{types: ['(cities)']}} placeholder='City' />
+              {this.state.scriptLoaded &&
+              <Field name='venue' type='text' component={TextInput} placeholder='Venue' />}
               <Field
                 name='date'
                 type='text'

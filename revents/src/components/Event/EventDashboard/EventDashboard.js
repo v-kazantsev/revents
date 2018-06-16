@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 
 import EventList from '../EventList/EventList';
 import { deleteEvent } from '../../../actions/eventActions';
+import { openModal } from '../../../actions/modalActions';
 
 
 const mapStateToProps = (state) => ({
@@ -11,7 +12,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  deleteEvent
+  deleteEvent,
+  openModal
 };
 
 class EventDashboard extends React.Component {
@@ -19,7 +21,7 @@ class EventDashboard extends React.Component {
     this.props.deleteEvent(eventId)
   };
   render() {
-    const {events} = this.props;
+    const {events, openModal} = this.props;
     return(
       <Grid>
         <Grid.Column width={10}>
@@ -29,7 +31,7 @@ class EventDashboard extends React.Component {
           />
         </Grid.Column>
         <Grid.Column width={6}>
-
+          <Button content='Test Modal' onClick={() => openModal('TestModal', {})}/>
         </Grid.Column>
       </Grid>
     )

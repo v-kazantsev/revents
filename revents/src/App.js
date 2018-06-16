@@ -8,11 +8,13 @@ import PeopleDashboard from './components/users/PeopleDashboard/PeopleDashboard'
 import Settings from './components/users/Settings/SettingsDashboard';
 import EventDetails from './components/Event/EventDetails/EventDetails';
 import EventForm from './components/Event/EventForm/EventForm';
+import ModalManager from './components/modals/ModalManager';
 
 class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ModalManager />
         <Route exact path='/' component={Home} />
         <Route
           path='/(.+)'
