@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Button } from 'semantic-ui-react';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import EventList from '../EventList/EventList';
 import { deleteEvent } from '../../../actions/eventActions';
 import { openModal } from '../../../actions/modalActions';
+import EventActivity from '../EventActivity/EventActivity';
 
 
 const mapStateToProps = (state) => ({
-  events: state.events
+  events: state.firestore.ordered.events
 });
 
 const mapDispatchToProps = {
@@ -31,11 +33,11 @@ class EventDashboard extends React.Component {
           />
         </Grid.Column>
         <Grid.Column width={6}>
-          <Button content='Test Modal' onClick={() => openModal('TestModal', {})}/>
+          <EventActivity />
         </Grid.Column>
       </Grid>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(firestoreConnect([{collection: 'events'}])(EventDashboard));

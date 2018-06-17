@@ -12,11 +12,11 @@ class EventListItem extends React.Component {
         <Segment>
           <Item.Group>
             <Item>
-              <Item.Image size='tiny' circular src={ event.hostPhotoUrl } />
+              <Item.Image size='tiny' circular src={event.hostPhotoUrl} />
               <Item.Content>
-                <Item.Header as='a'>{ event.title }</Item.Header>
+                <Item.Header as='a'>{event.title}</Item.Header>
                 <Item.Description>
-                  Hosted by <a>{ event.hostedBy }</a>
+                  Hosted by <a>{event.hostedBy}</a>
                 </Item.Description>
               </Item.Content>
             </Item>
@@ -25,13 +25,13 @@ class EventListItem extends React.Component {
         <Segment>
           <span>
             <Icon name='clock' /> {format(event.date, 'dddd Do MMMM')} at {format(event.date, 'HH:mm')} |
-            <Icon name='marker' /> {event.venue }
+            <Icon name='marker' /> {event.venue}
           </span>
         </Segment>
         <Segment secondary>
           <List horizontal>
-            { event.visitors && event.visitors.map(visitor => (
-              <EventVisitor key={visitor.id} visitor={visitor}/>
+            {event.visitors && Object.values(event.visitors).map((visitor,index) => (
+              <EventVisitor key={index} visitor={visitor}/>
             ))}
           </List>
         </Segment>
