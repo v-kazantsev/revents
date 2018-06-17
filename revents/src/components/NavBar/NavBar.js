@@ -1,26 +1,36 @@
 import * as React from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { Menu, Container, Button} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
 import LoggedOut from './Menus/LoggedOutMenu';
 import LoggedIn from './Menus/LoggedInMenu';
+import { openModal } from '../../actions/modalActions';
+import { logout } from '../../actions/authActions';
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const actions = {
+  openModal,
+  logout
+}
 
 class NavBar extends React.Component {
-  state = {
-    isAuthenticated: false
-  }
   handleLogIn = () => {
-    this.setState({
-      isAuthenticated: true
-    })
+    this.props.openModal('LoginModal')
+  };
+  handleSignup = () => {
+    this.props.openModal('SignupModal')
   };
   handleLogOut = () => {
-    this.setState({
-      isAuthenticated: false
-    })
-    this.props.history.push('/')
+    this.props.logout();
+    this.props.history.push('/');
   };
   render() {
-    const {isAuthenticated} = this.state;
+    const {auth} = this.props;
+    const isAuthenticated = auth.isAuthenticated;
     return(
       <Menu inverted fixed='top'>
         <Container>
@@ -34,12 +44,12 @@ class NavBar extends React.Component {
             <Button as={Link} to='/create' content='Create Event' floated='right' positive inverted />
           </Menu.Item>}
           {isAuthenticated ?
-          <LoggedIn onLogOut={this.handleLogOut}/>:
-          <LoggedOut onLogIn={this.handleLogIn}/>}
+          <LoggedIn currentUser={auth.currentUser} onLogOut={this.handleLogOut}/>:
+          <LoggedOut onLogIn={this.handleLogIn} onSignup={this.handleSignup}/>}
         </Container>
       </Menu>
     )
   }
 }
 
-export default withRouter(NavBar);
+export default withRouter(connect(mapStateToProps, actions)(NavBar));

@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TestModal from './TestModal';
+import LoginModal from './LoginModal';
+import SignupModal from './SignupModal';
 
 const modalLookup = {
-  TestModal
+  LoginModal,
+  SignupModal
 }
 
 const mapStateToProps = state => ({
