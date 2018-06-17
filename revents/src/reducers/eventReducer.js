@@ -5,7 +5,7 @@ const initialState = [
   {
     id: '1',
     title: 'Trip to Tower of London',
-    date: '2018-03-27',
+    date: '2018-03-27T19:00:00',
     category: 'culture',
     description: 'Description of the event',
     city: 'London, UK',
@@ -28,7 +28,7 @@ const initialState = [
   {
     id: '2',
     title: 'Trip to Vladivostok Railway Station',
-    date: '2018-03-27',
+    date: '2018-03-27T14:00:00',
     category: 'culture',
     description: 'Description of the event',
     city: 'Vladivostok, RU',

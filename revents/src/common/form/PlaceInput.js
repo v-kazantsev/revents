@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Label, Segment } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 import Script from 'react-load-script';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
@@ -16,7 +16,7 @@ class PlaceInput extends React.Component {
   };
   handleChange = (address) => this.setState({address});
   handleScriptLoaded = () => this.setState({scriptLoaded: true});
-  renderFormField = ({ getInputProps, suggestions, getSuggestionItemProps }) => {
+  renderFormField = ({ getInputProps, suggestions, getSuggestionItemProps }) => (
     <Form.Field>
       {suggestions.map((suggestion) => (
         <div {...getSuggestionItemProps(suggestion)} style={{cursor: 'pointer'}}>
@@ -24,7 +24,7 @@ class PlaceInput extends React.Component {
         </div>
       ))}
     </Form.Field>
-  }
+  )
   render() {
     const {input, value, width, onSelect, onChange, placeholder, options, meta: {touched, error}} = this.props;
     return(
@@ -42,22 +42,22 @@ class PlaceInput extends React.Component {
           onChange={this.handleChange}
           style={style}
         >
-        {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-         <div>
-           <input
-             {...getInputProps({
-              placeholder
-             })}
-            />
-           <Segment.Group suggestions={suggestions}>
-             {suggestions.map((suggestion) => (
-             <Segment {...getSuggestionItemProps(suggestion)} style={{cursor: 'pointer'}}>
-               {suggestion.description}
-             </Segment>
-             ))}
-           </Segment.Group>
-         </div>
-         )}
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+           <div>
+             <input
+               {...getInputProps({
+                placeholder
+               })}
+              />
+             <Segment.Group suggestions={suggestions}>
+               {suggestions.map((suggestion) => (
+               <Segment {...getSuggestionItemProps(suggestion)} style={{cursor: 'pointer'}}>
+                 {suggestion.description}
+               </Segment>
+               ))}
+             </Segment.Group>
+           </div>
+          )}
         </PlacesAutocomplete>}
       </Form.Field>
     //   <div>
