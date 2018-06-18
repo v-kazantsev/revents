@@ -24,7 +24,7 @@ class EventListItem extends React.Component {
         </Segment>
         <Segment>
           <span>
-            <Icon name='clock' /> {format(event.date, 'dddd Do MMMM')} at {format(event.date, 'HH:mm')} |
+            <Icon name='clock' /> {format(event.date.toDate(), 'dddd Do MMMM')} at {format(event.date.toDate(), 'HH:mm')}
             <Icon name='marker' /> {event.venue}
           </span>
         </Segment>
@@ -36,9 +36,9 @@ class EventListItem extends React.Component {
           </List>
         </Segment>
         <Segment clearing>
-          <span>{ event.description }</span>
+          <span>{event.description}</span>
           <Button content='View' as={Link} to={`/event/${event.id}`} color='teal' floated='right' />
-          <Button content='Delete' as='a' color='red' floated='right' inverted onClick={ onEventDelete(event)} />
+          <Button content='Delete' as='a' color='red' floated='right' inverted onClick={onEventDelete(event)} />
         </Segment>
       </Segment.Group>
     )
